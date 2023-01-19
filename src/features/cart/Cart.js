@@ -1,10 +1,10 @@
 import React from "react";
+
 import {
   calculateTotal,
   getCurrencySymbol,
 } from "../../utilities/utilities.js";
-
-// Import the changeItemQuantity() action creator.
+import { changeItemQuantity } from "./cartSlice.js";
 
 export const Cart = (props) => {
   const { cart, currencyFilter, dispatch } = props;
@@ -19,15 +19,17 @@ export const Cart = (props) => {
     const newQuantity = Number(input);
 
     // Dispatch an action to change the quantity of the given name and quantity.
+    dispatch(changeItemQuantity(name, newQuantity));
   };
 
   // Use the cart and currencyFilter slices to render their data.
-  const cartElements = Object.keys(cart).map(createCartItem); // replaces the "for" loop below
+
   // const cartElements = [];
   // for (let itemName in cart) {
   //   cartElements.push(createCartItem(itemName));
   // }
-
+  const cartElements = Object.keys(cart).map(createCartItem);
+  // replaces the "for" loop above
   const total = calculateTotal(cart, currencyFilter);
 
   return (
